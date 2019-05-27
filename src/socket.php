@@ -32,42 +32,41 @@ class socket {
      * @param string $msg
      */
     function push($msg='') {
-
+        $client = new \GuzzleHttp\Client();
+        $param = [];
+        $param['timestamp'] = time();
+        $param['appkey'] = $this->appkey;
+        $param['msg'] = json_decode($msg,true);
+        $sign = $this->getApiSign($param, $this->secret);
+        $param['sign'] = $sign;
+       $result = $response = $client->request('POST', $this->apiUrl, $param);
+       return $result;
     }
 
-
+    /**
+     * 获取签名
+     */
     function  getApiSign($data='',$secret='') {
-//        hash_hmac("sha1",$uri, $secret)
         $params= array();
-        $params["asd"]="ddd";
-
         $dtype = gettype($data);
         if($dtype === 'string') {
             $arr = explode('&', $data);
-//            echo '$signParam=11('.implode($arr,',').')';
-            echo "\n";
             foreach ($arr as $key => $value) {
-//                $data[$key] = $value . '_i';
                 $arrSub = explode('=', $value);
-                echo $arrSub[0].'='.$arrSub[1];
-                echo "\n";
-                $params[$arrSub[0]] = ($arrSub[1]);
+                $params[$arrSub[0]] = urlencode($arrSub[1]);
             }
+        } else {
+            $params = $data;
         }
-
         ksort($params);
-//        echo '$signParam=('.json_encode($params);
-//        echo "\n";
         $signParam = '';
         foreach ($params as $key => $value) {
             $signParam .= $key . '=' . $value . '&';
         }
-
-        $signParam = substr($signParam, 0,strlen($signParam)-1);
-        echo '$signParam=('.$signParam;
+        echo "asdasd+".$signParam;
         echo "\n";
-
-        $sign = hash_hmac("sha1",$signParam, $secret);
+        $signParam = urlencode(substr($signParam, 0,strlen($signParam)-1));
+        $sign = urlencode(base64_encode(hash_hmac("sha1",$signParam, $secret,true)));
         return $sign;
     }
 }
@@ -80,7 +79,17 @@ $a = new socket('asdasdasdasdasd','AkiFuqSfKvYaTRm8');
 //echo $a->getToken();
 //echo  "\n";
 //echo  "\n";
-echo '签名结果='.$a->getApiSign('name=a&timestamp=1558931484&cp=1&mp=20&userkey=d445378c40e34d43a5ce230aa189db53','c3a8f06a271348c19213e9605dad4e6c');
+$p = [];
+$p['name']='';
+$p['timestamp']=1558931484;
+$p['cp']=1;
+$p['mp']=20;
+$p['userkey']='d445378c40e34d43a5ce230aa189db53';
+
+echo 'i1IR%2BN9oROkc51Sq1PlzphScRsk%3D  =  '.$a->getApiSign('name=&timestamp=1558931484&cp=1&mp=20&userkey=d445378c40e34d43a5ce230aa189db53','c3a8f06a271348c19213e9605dad4e6c');
+echo "\n";
+echo "\n";
+echo 'i1IR%2BN9oROkc51Sq1PlzphScRsk%3D  =  '.$a->getApiSign($p,'c3a8f06a271348c19213e9605dad4e6c');
 //echo  "\n";
 //echo  'i1IR%2BN9oROkc51Sq1PlzphScRsk%3D';
 //echo  "\n";
