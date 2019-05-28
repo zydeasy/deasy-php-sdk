@@ -19,10 +19,6 @@ class ComposerStaticInitec508a834c87012998b809b25117c8e2
         array (
             'phpseclib\\' => 10,
         ),
-        'S' => 
-        array (
-            'SliderCapcha\\' => 13,
-        ),
         'P' => 
         array (
             'Psr\\Http\\Message\\' => 17,
@@ -33,16 +29,16 @@ class ComposerStaticInitec508a834c87012998b809b25117c8e2
             'GuzzleHttp\\Promise\\' => 19,
             'GuzzleHttp\\' => 11,
         ),
+        'D' => 
+        array (
+            'Deasy\\' => 6,
+        ),
     );
 
     public static $prefixDirsPsr4 = array (
         'phpseclib\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpseclib/phpseclib/phpseclib',
-        ),
-        'SliderCapcha\\' => 
-        array (
-            0 => __DIR__ . '/../..' . '/src',
         ),
         'Psr\\Http\\Message\\' => 
         array (
@@ -59,6 +55,10 @@ class ComposerStaticInitec508a834c87012998b809b25117c8e2
         'GuzzleHttp\\' => 
         array (
             0 => __DIR__ . '/..' . '/guzzlehttp/guzzle/src',
+        ),
+        'Deasy\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/src',
         ),
     );
 

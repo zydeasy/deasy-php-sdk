@@ -3,16 +3,19 @@ namespace Deasy;
 require "vendor/autoload.php";
 use \phpseclib\Crypt\AES;
 use GuzzleHttp\Client;
+use \Deasy\Tools\Tools;
 
 class Socket {
     private  $appkey = '';
     private $secret = '';
     private $apiUrl ='';
+    private  $tools;
 
     function __construct($appkey='', $secret='', $url="https://grootapi.zuoyanit.com") {
       $this->appkey = $appkey;
       $this->secret = $secret;
       $this->apiUrl = $url.'/socket/push';
+      $this->tools = new Tools();
     }
 
     /** 获取前端鉴权的token
@@ -41,11 +44,9 @@ class Socket {
         } else {
             $param['msg'] = json_encode($msg,true);
         }
-        // $t = 'timestamp='.time().'&appkey='.$this->appkey.'&msg='.$msg;
-        $sign = $this->getApiSign($param, $this->secret);
+
+        $sign = $this->tools->getApiSign($param, $this->secret);
         $param['sign'] = $sign;
-        $t.='&sign='.$sign;
-        echo "$sign=".$sign;
         $response = $client->post($this->apiUrl, [
           "form_params"=>
             $param
@@ -54,32 +55,7 @@ class Socket {
        return $response->getBody();
     }
 
-    /**
-     * 获取签名
-     */
-    function  getApiSign($data='',$secret='') {
-        $params= array();
-        $dtype = gettype($data);
-        if($dtype === 'string') {
-            $arr = explode('&', $data);
-            foreach ($arr as $key => $value) {
-                $arrSub = explode('=', $value);
-                $params[$arrSub[0]] = urlencode($arrSub[1]);
-            }
-        } else {
-            $params = $data;
-        }
-        ksort($params);
-        $signParam = '';
-        foreach ($params as $key => $value) {
-            $signParam .= $key . '=' . $value . '&';
-        }
-        echo "asdasd+".$signParam;
-        echo "\n";
-        $signParam = urlencode(substr($signParam, 0,strlen($signParam)-1));
-        $sign = urlencode(base64_encode(hash_hmac("sha1",$signParam, $secret,true)));
-        return $sign;
-    }
+
 }
 
 
