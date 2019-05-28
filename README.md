@@ -1,4 +1,8 @@
 # deasy SDK
+## install
+```js
+composer require deasy/deasy-sdk
+```
 ### socket
 * 获取前端鉴权token
 ```js
