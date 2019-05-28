@@ -1,6 +1,6 @@
 <?php
-namespace deasy;
+namespace Deasy;
 
-class deasy {
-  
+class Deasy {
+
 }
