@@ -7,8 +7,13 @@ if (is_file('/../vendor/autoload.php')) {
     require_once '/vendor/autoload.php';
 }
 
-use Deasy\Socket;
-$a = new Socket('5cdad8fab007211b603c705c','abcdefgabcdefg12','http://192.168.3.161:8464');
+// use Deasy\Socket;
+use Deasy\Sms;
+
+// $a = new Socket('5cdad8fab007211b603c705c','abcdefgabcdefg12','http://192.168.3.161:8464');
+$sms = new Sms('e288dcd940b4561a58ea378f9dc0b684','a9b86566de7f4df5a6c46fd91957203b','http://127.0.0.1:8464');
+$aa = $sms->send('15537172119','tessssssssss','deasy');
+echo $aa;
  //echo "5mhhpss4jeb02tKGbqjV4A==";
  //echo  "\n";
  //echo $a->getToken();
@@ -28,11 +33,11 @@ $a = new Socket('5cdad8fab007211b603c705c','abcdefgabcdefg12','http://192.168.3.
  //echo  "\n";
  //echo  'i1IR%2BN9oROkc51Sq1PlzphScRsk%3D';
  //echo  "\n";
- echo $a->push([
-   'user'=>'1',
-   'group'=>"test",
-   'event'=>"aa",
-   'msg'=>[
-     "a"=>"d"
-   ]
- ]);
+//  echo $a->push([
+//    'user'=>'1',
+//    'group'=>"test",
+//    'event'=>"aa",
+//    'msg'=>[
+//      "a"=>"d"
+//    ]
+//  ]);
