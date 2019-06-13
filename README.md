@@ -19,3 +19,11 @@ $token = $socket.push([
   xxxxxxx
 ]);
 ```
+
+### sms
+* 发送短信
+```js
+use Deasy\Sms;
+$sms = new Sms(appkey, secret);
+$result = $sms.send(phone, msg, signname);
+```
